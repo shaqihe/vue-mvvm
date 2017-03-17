@@ -6,6 +6,23 @@
 *
 */
 
+/**
+ * 暴露 observer方法，返回Observer实例
+ *
+ * @protected
+ * @method
+ * @param {Object} data  -要转换的数据对象
+ * @returns {Object}
+ */
+
+function observe(value) {
+    //判断类型，typeOf可能出现 null、Array 等也是object，此次要做精确判断
+    if (Object.prototype.toString.call(value) == '[object Object]') {
+        return;
+    }
+
+    return new Observer(value);
+};
 
 
 /**
