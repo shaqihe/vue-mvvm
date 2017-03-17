@@ -22,12 +22,13 @@
  * @returns {void}
  */
 function Compile(el, vm) {
+
     this.$vm = vm;
     //el是个节点，直接用。不是节点，就获取此节点
     this.$el = this.isElementNode(el) ? el : document.querySelector(el);
     if (this.$el) {
         // 因为对Dom操作比较频繁，还是比较影响性能的，创建一个文档碎片，所有的操作都基于此文档碎片
-        this.$fragment = this.nodeToFragment(this.$el);
+        this.$fragment = this.nodeTOfragment(this.$el);
         //编译解析模板
         this.init();
         //最后一次性把文档碎片插入到页面(模板中)
@@ -64,7 +65,7 @@ Compile.prototype = {
             var reg = /\{\{(.*)\}\}/; //{{xxx}} 正则匹配
 
             if (that.isElementNode(node)) {
-                this.compile(node);
+                that.compile(node);
             }
             else if (that.isTextNode(node) && reg.test(text)) {
                 // 参数是 Node 和正则匹配的第一个
@@ -72,7 +73,7 @@ Compile.prototype = {
             }
             //递归调用
             if (node.childNodes && node.childNodes.length) {
-                me.compileElement(node);
+                that.compileElement(node);
             }
         });
     },
@@ -91,7 +92,7 @@ Compile.prototype = {
                 var dir = attrName.substring(2);
                 //判断是不是事件指令
                 if (that.isEventDirective(dir)) {
-                    compileUtil.eventHandler(node, that, attrVal, dir)
+                    compileUtil.eventHandler(node, that.$vm, attrVal, dir)
                 }
                 else {
                     compileUtil[dir] && compileUtil[dir](node, that.$vm, attrVal)
@@ -173,6 +174,7 @@ var compileUtil = {
 
     //v-model 指令特殊处理下，需要给当前node添加一些input事件，做到双向绑定
     model: function(node, vm, exp) {
+        
         //这个为了做到，model-->view 同步
         this.bind(node, vm, exp, 'model');
         //下面就是为了做到，view改变-->model 同步

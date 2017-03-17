@@ -17,7 +17,7 @@
 
 function observe(value) {
     //判断类型，typeOf可能出现 null、Array 等也是object，此次要做精确判断
-    if (Object.prototype.toString.call(value) == '[object Object]') {
+    if (Object.prototype.toString.call(value) !== '[object Object]') {
         return;
     }
 
@@ -39,7 +39,7 @@ function Observer (data){
 };
 
 // 原型上的一些公用方法
-Oserver.prototype = {
+Observer.prototype = {
     //转换的入口函数
     run: function (data) {
         for (var key in data) {
@@ -50,12 +50,14 @@ Oserver.prototype = {
     },
     //转换的主函数
     defineReactive: function (data, key, value) {
+
         var dep = new Dep();
-        var childObj = observe(val);
+        var childObj = observe(value);
         Object.defineProperty(data, key, {
             enumerable: true, //可枚举
             configurable: false, //不再defineProperty
             get: function () {
+
                 // 通过Dep定义一个全局target属性，暂存watcher, 添加完移除
                 if (Dep.target) {
                     dep.depend();
@@ -63,12 +65,13 @@ Oserver.prototype = {
                 return value;
             },
             set: function (newVal) {
+                
                 if (newVal === value) {
                     return;
                 }
                 value = newVal;
                 //如果value 是一个对象，还要进入监控流程
-                observer(value);
+                observe(value);
                 //通知订阅者，数据发生改变了
                 dep.notify();
             }
