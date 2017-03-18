@@ -7,9 +7,7 @@ vue的mvvm实现，通过代码实现一个超级简单的mvvm的功能，具体
 **VUE的数据的双向同步，主要通过 defineProperty把数据转化为getter与setter。**
 
 一个简单的分工流涉及到几个对象：
-
-![此处输入图片的描述][2]
-![vue](./vue.jpg) 
+![vue](./vue.jpg)
 图中：
  - 绿色：Observer，负责数据劫持，增加geter、seter
  - 蓝色：Warcher，订阅Observer的seter触发的钩子
