@@ -174,7 +174,7 @@ var compileUtil = {
 
     //v-model 指令特殊处理下，需要给当前node添加一些input事件，做到双向绑定
     model: function(node, vm, exp) {
-        
+
         //这个为了做到，model-->view 同步
         this.bind(node, vm, exp, 'model');
         //下面就是为了做到，view改变-->model 同步

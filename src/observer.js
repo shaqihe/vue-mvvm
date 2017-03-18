@@ -58,14 +58,14 @@ Observer.prototype = {
             configurable: false, //不再defineProperty
             get: function () {
 
-                // 通过Dep定义一个全局target属性，暂存watcher, 添加完移除
+                // dep是在defineReactive方法里实例化的，所以只能通过Dep类定义一个全局target属性，暂存watcher, 添加完移除
                 if (Dep.target) {
                     dep.depend();
                 }
                 return value;
             },
             set: function (newVal) {
-                
+
                 if (newVal === value) {
                     return;
                 }
@@ -103,6 +103,8 @@ Dep.prototype = {
     },
 
     // 通过Dep定义一个全局target属性，暂存watcher, 添加完移除
+    // depend此方法是调用wetcher里提供的addDep方法，addDep方法用会调用 addSub
+    // 就形成了  每个data.xx属性 都用一个自己的  订阅者维护在  自己的 dep中
     depend: function() {
         Dep.target.addDep(this);
     },
