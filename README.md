@@ -47,7 +47,7 @@ Vue作为数据绑定的入口，整合Observer、Compile和Watcher三者
  4. 达到数据变化 -> 视图更新；视图交互变化(input) -> 数据model变更的双向绑定效果。
 
 
-
+[效果截图][3]
 
 
 
@@ -56,3 +56,4 @@ Vue作为数据绑定的入口，整合Observer、Compile和Watcher三者
 
   [1]: https://github.com/shaqihe/vue-mvvm
   [2]: http://7xqd2y.com1.z0.glb.clouddn.com/vue2a.jpg
+  [3]: http://7xqd2y.com1.z0.glb.clouddn.com/demo.gif
