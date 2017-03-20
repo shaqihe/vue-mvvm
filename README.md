@@ -48,8 +48,7 @@ Vue作为数据绑定的入口，整合Observer、Compile和Watcher三者
 
 
 
-![效果截图][3]
-
+![效果截图](./demo.gif)
 
 
 
